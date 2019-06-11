@@ -31,7 +31,6 @@
 				case "venta":
 					require_once("clases/AltaVenta.php");
 
-					//AltaVenta::altaPizza($_POST["tipo"], $_POST["sabor"], $_POST["cantidad"], $_POST["precio"], $_POST["email"]);
 					AltaVenta::altaPizza($_POST["tipo"], $_POST["sabor"], $_POST["cantidad"], $_POST["precio"], $_POST["email"], $_FILES["foto"]);
 					break;
 				default:
@@ -41,7 +40,15 @@
 			break;
 		case "PUT":
 			parse_str(file_get_contents("php://input"), $_PUT);
-			var_dump($_PUT);
+
+			switch ($_PUT["accion"])
+			{
+				case "carga":
+					require_once("clases/PizzaCargaPlus.php");
+
+					PizzaCargaPlus::altaPizza($_PUT["tipo"], $_PUT["sabor"], $_PUT["cantidad"], $_PUT["precio"]);
+					break;
+			}
 			break;
 		default:
 			echo "Se invoco al metodo HTTP: $metodo";
